@@ -32,8 +32,28 @@ fecha = datetime.now().strftime("%d/%m/%Y %H:%M")
 estilos_titulo = estilos["Title"]
 estilos.spaceAfter = 20
 elementos.append(Paragraph("REPORTE DE EMPLEADOS", estilos_titulo))
-elementos.append(f"Generado el: {fecha}",  estilos["normal"])
+elementos.append(Paragraph(f"Generado el: {fecha}",  estilos["Normal"]))
 elementos.append(Spacer(1, 20))
 
 #TABLA DESDE DF
 header = ["Nombre", "Departamento", "Salario"]
+filas = [[
+    row["nombre"], row["departamento"], f"S/ {row["salario"]}"]
+          for _, row in df.iterrows()]
+
+tabla = Table([header] + filas, colWidths=[180, 150, 100])
+tabla.setStyle([
+    ("BACKGROUND", (0,0), (-1,0), colors.HexColor("#54a3f1")),
+    ("TEXTCOLOR", (0,0), (-1,0), colors.white),
+    ("ALIGN", (0,0), (-1,0), "CENTER"),
+    ("FONTNAME", (0,0), (-1,0), "Helvetica-Bold"),
+    ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#ecf0f1")]),
+    ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
+])
+
+elementos.append(tabla)
+elementos.append(Spacer(1, 20))
+elementos.append(Image("grafico_temp.png", width=450, height=250))
+
+doc.build(elementos)
+print("REPORTE DE EMPLEADOS GENERADO CORRECTAMENTE")
