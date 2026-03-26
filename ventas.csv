@@ -1,0 +1,11 @@
+vendedor,producto,cantidad,precio_unitario,fecha,region
+Juan Carlos,Laptop,2,2500.50,15/01/2026,Lima
+maria garcia,Mouse,,25.99,16/01/2026,Lima
+PEDRO LOPEZ,Teclado,3,75.00,16/01/2026,Arequipa
+Ana Torres,Monitor,1,,17/01/2026,Cusco
+juan carlos,Laptop,1,2500.50,17/01/2026,Lima
+,Audífonos,2,49.99,18/01/2026,Lima
+Maria Garcia,Mouse,4,25.99,18/01/2026,Lima
+Carlos Ruiz,Laptop,3,2500.50,19/01/2026,Arequipa
+ana torres,Monitor,2,450.00,19/01/2026,Cusco
+Pedro Lopez,Teclado,5,75.00,20/01/2026,Arequipa

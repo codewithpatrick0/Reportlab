@@ -1,0 +1,10 @@
+﻿vendedor;producto;cantidad;precio_unitario;fecha;region;venta_total
+Juan Carlos;Laptop;2.0;2500.5;15/01/2026;Lima;5001.0
+Maria Garcia;Mouse;0.0;25.99;16/01/2026;Lima;0.0
+Pedro Lopez;Teclado;3.0;75.0;16/01/2026;Arequipa;225.0
+Ana Torres;Monitor;1.0;0.0;17/01/2026;Cusco;0.0
+Juan Carlos;Laptop;1.0;2500.5;17/01/2026;Lima;2500.5
+Maria Garcia;Mouse;4.0;25.99;18/01/2026;Lima;103.96
+Carlos Ruiz;Laptop;3.0;2500.5;19/01/2026;Arequipa;7501.5
+Ana Torres;Monitor;2.0;450.0;19/01/2026;Cusco;900.0
+Pedro Lopez;Teclado;5.0;75.0;20/01/2026;Arequipa;375.0
