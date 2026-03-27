@@ -22,17 +22,17 @@ def limpiar_datos(df) :
 
 def procesar_datos(df) :
     df["venta_total"] = df["cantidad"] * df["precio_unitario"]
-    ventas_por_vendedor = df.groupby("vendedor")["venta_total"].sum()
-    max_monto = ventas_por_vendedor.max()
+    ventas_por_vendedor = df.groupby("vendedor")["cantidad"].sum()
+    max_unidades_vendidas_por_vendedor = ventas_por_vendedor.max()
     ventas_por_region = df.groupby("region")["venta_total"].sum()
     max_vendedor = ventas_por_vendedor.idxmax()
     max_producto = df.groupby("producto")["cantidad"].sum().idxmax()
-    ventas_totales = ventas_por_vendedor.sum()
-    max_monto_producto = (df.groupby("producto")["venta_total"].sum()).max()
+    ventas_totales = df["venta_total"].sum()
+    max_cantidad_producto = (df.groupby("producto")["cantidad"].sum()).max()
     
     resumen = {
-        "mejor_monto_producto" : max_monto_producto,
-        "mejor_monto" : max_monto,
+        "mejor_cantidad_producto" : max_cantidad_producto,
+        "mejor_vendedor_cantidad" : max_unidades_vendidas_por_vendedor,
         "ventas_por_vendedor": ventas_por_vendedor,
         "ventas_por_region": ventas_por_region,
         "mejor_vendedor": max_vendedor,
@@ -75,11 +75,11 @@ def generar_pdf(df, resumen) :
     elementos.append(Paragraph("REPORTE DE VENTAS 03/26", estilos_titulo))
     elementos.append(Paragraph(f"Generado el: {fecha}", estilos["Normal"]))
     elementos.append(Spacer(1, 20))
-    elementos.append(Paragraph(f"Total de ventas: S/{resumen["ventas_totales"]}", estilos["Normal"]))
+    elementos.append(Paragraph(f"Total de ventas: S/{resumen["ventas_totales"]:,.2f}", estilos["Normal"]))
     elementos.append(Spacer(1,10))
-    elementos.append(Paragraph(f"Mejor vendedor: {resumen["mejor_vendedor"]}-S/{resumen["mejor_monto"]}", estilos["Normal"]))
+    elementos.append(Paragraph(f"Mejor vendedor: {resumen["mejor_vendedor"]} - {resumen["mejor_vendedor_cantidad"]} unidades de productos vendidos", estilos["Normal"]))
     elementos.append(Spacer(1,10))
-    elementos.append(Paragraph(f"Producto más vendido: {resumen["producto_mas_vendido"]}-{resumen["mejor_monto_producto"]}", estilos["Normal"]))
+    elementos.append(Paragraph(f"Producto más vendido: {resumen["producto_mas_vendido"]} - {resumen["mejor_cantidad_producto"]} unidades.", estilos["Normal"]))
     elementos.append(Spacer(1,10))
     elementos.append(Paragraph(f"Registros eliminados: {resumen["descartados"]}", estilos["Normal"]))
     elementos.append(Spacer(1, 20))
@@ -91,7 +91,7 @@ def generar_pdf(df, resumen) :
     df_fmt["venta_total"] = df_fmt["venta_total"].apply(lambda x : f"S/{x:,.2f}")
     
     datos = [header]
-    datos.extend(df[columnas_df].values.tolist())
+    datos.extend(df_fmt[columnas_df].values.tolist())
     
     tabla = Table(datos, colWidths=[90, 80, 40, 70, 80, 80, 80])
     tabla.setStyle(TableStyle([
@@ -144,7 +144,6 @@ def ejecutar(archivo) :
         
         #Generar CSV
         print("Generando CSV  actualizado")
-        generar_csv(df_listo)
         csv_nuevo = generar_csv(df_limpio)
         print(f"CSV ACTUALIZADO Y GUARDADO CORRECTAMENTE EN: {csv_nuevo}")
         #Generar PDF
